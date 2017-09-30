@@ -1,0 +1,69 @@
+{
+  "name": "dslink-java-v2-example",
+  "version": "0.0.0.0",
+  "description": "Example Java Link",
+  "main": "bin/dslink-java-v2-example",
+  "configs": {
+    "rootType": {
+      "desc1": "*************** THIS IS REQUIRED AND MUST BE CHANGED ***************",
+      "desc2": "Fully qualified class name of the root node of the link.",
+      "value": "org.iot.dsa.dslink.example.ExampleRoot"
+    },
+    "section": {
+      "desc": "*************** OPTIONAL CONFIGS IN ALPHABETICAL ORDER ***************",
+      "value": null
+    },
+    "broker": {
+      "desc": "URL to broker. Can be specified on the command line.",
+      "value": null
+    },
+    "connectionType": {
+      "desc": "Can be specified to override the default connection type.",
+      "value": null
+    },
+    "isRequester": {
+      "desc": "Whether or not the link is a requester.",
+      "value": false
+    },
+    "isResponder": {
+      "desc": "Whether or not the link is a responder.",
+      "value": true
+    },
+    "key": {
+      "desc": "Path to public/private key pair.",
+      "value": ".key"
+    },
+    "log": {
+      "desc": "debug, info, warn, error, none",
+      "value": "info"
+    },
+    "logFile": {
+      "desc": "Path to the log file.",
+      "value": null
+    },
+    "nodes": {
+      "desc": "Path to configuration database.",
+      "value": "nodes.json"
+    },
+    "readTimeout": {
+      "desc": "Millis timeout for reading from the connection.",
+      "value": 60000
+    },
+    "saveInterval": {
+      "desc": "How often to backup the node database in minutes.",
+      "value": 60
+    },
+    "stableDelay": {
+      "desc": "Millis after the node tree is started before calling stable.",
+      "value": 5000
+    },
+    "token": {
+      "desc": "Authentication token for the broker.",
+      "value": null
+    },
+    "transportFactory": {
+      "desc": "Can be specified to override the default standalone transport.",
+      "value": null
+    }
+  }
+}
