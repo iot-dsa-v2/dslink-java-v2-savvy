@@ -26,9 +26,11 @@ public class ExampleRoot extends DSRootNode implements Runnable {
     // Fields
     ///////////////////////////////////////////////////////////////////////////
 
-    //Storing infos in fields eliminates name lookups
-    private DSInfo counter = getInfo(COUNTER);
-    private DSInfo reset = getInfo(RESET);
+    //Storing infos in fields eliminates name lookups, but should only be done
+    //with declared defaults.  This can be done with dynamic children, but extra
+    //care will be required.
+    private final DSInfo counter = getInfo(COUNTER);
+    private final DSInfo reset = getInfo(RESET);
 
     private DSRuntime.Timer timer;
 
@@ -120,6 +122,10 @@ public class ExampleRoot extends DSRootNode implements Runnable {
         synchronized (counter) {
             DSInt value = (DSInt) counter.getValue();
             put(counter, DSInt.valueOf(value.toInt() + 1));
+            //Without the counter field, this method would have required at least one lookup.
+            //The following is the worst performance option (not that it really matters here):
+            //DSInt val = (DSInt) get(COUNTER);
+            //put(COUNTER, DSInt.valueOf(val.toInt() + 1));
         }
     }
 
