@@ -7,7 +7,7 @@
 
 ## Overview
 
-This is a simple link that can used as the boilerplate for a new Java DSLink.
+This is a simple link that can copied and used as the boilerplate for a new Java DSLink.
 
 If you are not familiar with DSA and links, an overview can be found at
 [here](http://iot-dsa.org/get-started/how-dsa-works).
@@ -18,11 +18,11 @@ This link was built using the DSLink Java SDK which can be found
 
 ## Creating a New Link
 
-To create a new link using this as the source material, you should do the following:
+When creating a new link from this source material, you should do the following:
 
 1. Modify build.gradle
     - group - Your organization's identifier.
-    - version - The current version of the link.  Don't forget to update this!
+    - version - The current version of the link.
 2. Modify LICENSE
     - At the very least, change the copyright holder.
 3. Modify dslink.json
@@ -57,14 +57,14 @@ This section outlines the hierarchy of nodes defined by this link.
 
 ## Node Guide
 
-The following section provide detailed descriptions of each node in the link as well as
-descriptions of key values and actions.
+The following section provides detailed descriptions of each node in the link as well as
+descriptions of actions, values and child nodes.
 
 
 ### ExampleRoot
 
-This is the root node of the link.  It has a counter that is automatically updated
-whenever the node is subscribed.  It also has a simple action to reset the counter.
+This is the root node of the link.  It has a counter that is updated on a short interval,
+only when the node is subscribed.  It also has a simple action to reset the counter.
 
 **Actions**
 - Reset - Resets the counter to 0.

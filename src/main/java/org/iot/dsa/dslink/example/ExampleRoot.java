@@ -19,8 +19,8 @@ public class ExampleRoot extends DSRootNode implements Runnable {
     // Constants
     ///////////////////////////////////////////////////////////////////////////
 
-    static final String COUNTER = "Counter";
-    static final String RESET = "Reset";
+    private static String COUNTER = "Counter";
+    private static String RESET = "Reset";
 
     ///////////////////////////////////////////////////////////////////////////
     // Fields
@@ -57,7 +57,9 @@ public class ExampleRoot extends DSRootNode implements Runnable {
     @Override
     public ActionResult onInvoke(DSInfo actionInfo, ActionInvocation invocation) {
         if (actionInfo == this.reset) {
-            put(counter, DSInt.valueOf(0));
+            synchronized (this) {
+                put(counter, DSInt.valueOf(0));
+            }
             return null;
         }
         return super.onInvoke(actionInfo, invocation);
@@ -108,7 +110,7 @@ public class ExampleRoot extends DSRootNode implements Runnable {
      * subscribed.
      */
     @Override
-    public void run() {
+    public synchronized void run() {
         DSInt value = (DSInt) counter.getValue();
         put(counter, DSInt.valueOf(value.toInt() + 1));
     }
