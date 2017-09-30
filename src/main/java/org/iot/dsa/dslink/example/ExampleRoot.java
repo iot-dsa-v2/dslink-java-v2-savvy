@@ -26,8 +26,9 @@ public class ExampleRoot extends DSRootNode implements Runnable {
     // Fields
     ///////////////////////////////////////////////////////////////////////////
 
-    // Storing infos in fields eliminates name lookups, but should only be done
-    // with declared defaults.  This can be done with dynamic children, but extra
+    // Nodes store children and meta-data about the relationship in DSInfo instances.
+    // Storing infos as Java fields eliminates name lookups, but should only be done
+    // with declared defaults.  It can be done with dynamic children, but extra
     // care will be required.
     private final DSInfo counter = getInfo(COUNTER);
     private final DSInfo reset = getInfo(RESET);
