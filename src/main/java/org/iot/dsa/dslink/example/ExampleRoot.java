@@ -26,8 +26,10 @@ public class ExampleRoot extends DSRootNode implements Runnable {
     // Fields
     ///////////////////////////////////////////////////////////////////////////
 
+    //Storing infos in fields eliminates name lookups
     private DSInfo counter = getInfo(COUNTER);
     private DSInfo reset = getInfo(RESET);
+
     private DSRuntime.Timer timer;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -56,9 +58,12 @@ public class ExampleRoot extends DSRootNode implements Runnable {
      */
     @Override
     public ActionResult onInvoke(DSInfo actionInfo, ActionInvocation invocation) {
-        if (actionInfo == this.reset) {
-            synchronized (this) {
+        if (actionInfo == reset) {
+            synchronized (counter) {
                 put(counter, DSInt.valueOf(0));
+                //The following line would have also worked, but it would have
+                //required a name lookup.
+                //put(COUNTER, DSInt.valueOf(0));
             }
             return null;
         }
@@ -73,7 +78,8 @@ public class ExampleRoot extends DSRootNode implements Runnable {
      * {@inheritDoc}
      */
     @Override
-    protected synchronized void onSubscribed() {
+    protected void onSubscribed() {
+        //Use DSRuntime for timers and its thread pool.
         timer = DSRuntime.run(this, System.currentTimeMillis() + 1000l, 1000l);
     }
 
@@ -100,7 +106,7 @@ public class ExampleRoot extends DSRootNode implements Runnable {
      * {@inheritDoc}
      */
     @Override
-    protected synchronized void onUnsubscribed() {
+    protected void onUnsubscribed() {
         timer.cancel();
         timer = null;
     }
@@ -110,9 +116,11 @@ public class ExampleRoot extends DSRootNode implements Runnable {
      * subscribed.
      */
     @Override
-    public synchronized void run() {
-        DSInt value = (DSInt) counter.getValue();
-        put(counter, DSInt.valueOf(value.toInt() + 1));
+    public void run() {
+        synchronized (counter) {
+            DSInt value = (DSInt) counter.getValue();
+            put(counter, DSInt.valueOf(value.toInt() + 1));
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////

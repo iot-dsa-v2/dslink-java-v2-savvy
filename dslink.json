@@ -7,62 +7,73 @@
     "rootType": {
       "desc1": "*************** THIS IS REQUIRED AND MUST BE CHANGED ***************",
       "desc2": "Fully qualified class name of the root node of the link.",
+      "type": "string",
       "value": "org.iot.dsa.dslink.example.ExampleRoot"
     },
-    "section": {
-      "desc": "*************** OPTIONAL CONFIGS IN ALPHABETICAL ORDER ***************",
-      "value": null
-    },
     "broker": {
-      "desc": "URL to broker. Can be specified on the command line.",
+      "desc1": "*************** OPTIONAL CONFIGS IN ALPHABETICAL ORDER ***************",
+      "desc2": "URL to broker.",
+      "type": "url",
       "value": null
     },
     "connectionType": {
       "desc": "Can be specified to override the default connection type.",
+      "type": "string",
       "value": null
     },
     "isRequester": {
       "desc": "Whether or not the link is a requester.",
-      "value": false
+      "type": "boolean",
+      "value": null
     },
     "isResponder": {
       "desc": "Whether or not the link is a responder.",
-      "value": true
+      "type": "boolean",
+      "value": null
     },
     "key": {
       "desc": "Path to public/private key pair.",
-      "value": ".key"
+      "type": "path",
+      "value": null
     },
     "log": {
       "desc": "debug, info, warn, error, none",
+      "type": "enum",
       "value": "info"
     },
     "logFile": {
       "desc": "Path to the log file.",
+      "type": "path",
       "value": null
     },
     "nodes": {
       "desc": "Path to configuration database.",
-      "value": "nodes.json"
+      "type": "path",
+      "value": null
     },
     "readTimeout": {
       "desc": "Millis timeout for reading from the connection.",
-      "value": 60000
+      "type": "number",
+      "value": null
     },
     "saveInterval": {
       "desc": "How often to backup the node database in minutes.",
-      "value": 60
+      "type": "number",
+      "value": null
     },
     "stableDelay": {
       "desc": "Millis after the node tree is started before calling stable.",
-      "value": 5000
+      "type": "number",
+      "value": null
     },
     "token": {
       "desc": "Authentication token for the broker.",
+      "type": "string",
       "value": null
     },
     "transportFactory": {
       "desc": "Can be specified to override the default standalone transport.",
+      "type": "string",
       "value": null
     }
   }

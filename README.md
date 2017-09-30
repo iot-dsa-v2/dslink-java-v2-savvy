@@ -1,6 +1,6 @@
 # dslink-java-v2-example
 
-* Version: 0.0.0
+* Version: 0.1.0
 * Java - version 1.6 and up.
 * [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
@@ -20,17 +20,20 @@ This link was built using the DSLink Java SDK which can be found
 
 When creating a new link from this source material, you should do the following:
 
-1. Modify build.gradle
+1. Edit the code
+    - Change the package and directories to match your organization.
+    - Change the class name of the root node.
+2. Modify build.gradle
     - group - Your organization's identifier.
     - version - The current version of the link.
-2. Modify LICENSE
+3. Modify LICENSE
     - At the very least, change the copyright holder.
-3. Modify dslink.json
+4. Modify dslink.json
     - Change name, version, and description.
     - Change main, this is the path to the shell script used to launch the link.
     - Change the value of the config named "rootType". This must be the fully qualified class name 
       of your root node.
-4. Edit this README
+5. Edit this README
     - Please maintain a helpful readme.
     - Change the title.
     - Maintain a version number.
@@ -42,10 +45,6 @@ When creating a new link from this source material, you should do the following:
     - Update the Node Guide.
     - Acknowledge any 3rd party libraries you use.
     - Maintain a version history.
-5. Edit the code
-    - Change the package and directories to match your organization.
-    - Change the root node class name.
-
 
 ## Link Architecture
 
@@ -87,6 +86,6 @@ at https://github.com/iot-dsa-v2/sdk-dslink-java/blob/master/LICENSE
 
 ## History
 
-* Version 0.0.0
+* Version 0.1.0
   - Hello World
 
