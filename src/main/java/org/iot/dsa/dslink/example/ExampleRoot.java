@@ -27,8 +27,8 @@ public class ExampleRoot extends DSRootNode implements Runnable {
     ///////////////////////////////////////////////////////////////////////////
 
     // Nodes store children and meta-data about the relationship in DSInfo instances.
-    // Storing infos as Java fields eliminates name lookups, but should only be done
-    // with declared defaults.  It can be done with dynamic children, but extra
+    // Storing infos as Java fields eliminates subsequent name lookups, but should only be
+    // done with declared defaults.  It can be done with dynamic children, but extra
     // care will be required.
     private final DSInfo counter = getInfo(COUNTER);
     private final DSInfo reset = getInfo(RESET);
@@ -108,8 +108,7 @@ public class ExampleRoot extends DSRootNode implements Runnable {
     }
 
     /**
-     * Called by the timer, increments the counter on a one second interval, only when this node is
-     * subscribed.
+     * Called by the timer, increments the counter.
      */
     @Override
     public void run() {
