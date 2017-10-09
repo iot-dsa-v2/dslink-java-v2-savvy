@@ -1,6 +1,6 @@
 {
   "name": "dslink-java-v2-example",
-  "version": "0.0.0.0",
+  "version": "1.0.0.0",
   "description": "Example Java Link",
   "main": "bin/dslink-java-v2-example",
   "configs": {
@@ -24,17 +24,17 @@
     "isRequester": {
       "desc": "Whether or not the link is a requester.",
       "type": "boolean",
-      "value": null
+      "value": false
     },
     "isResponder": {
       "desc": "Whether or not the link is a responder.",
       "type": "boolean",
-      "value": null
+      "value": true
     },
     "key": {
       "desc": "Path to public/private key pair.",
       "type": "path",
-      "value": null
+      "value": ".key"
     },
     "log": {
       "desc": "debug, info, warn, error, none",
@@ -54,17 +54,17 @@
     "readTimeout": {
       "desc": "Millis timeout for reading from the connection.",
       "type": "number",
-      "value": null
+      "value": 60000
     },
     "saveInterval": {
       "desc": "How often to backup the node database in minutes.",
       "type": "number",
-      "value": null
+      "value": 60
     },
     "stableDelay": {
       "desc": "Millis after the node tree is started before calling stable.",
       "type": "number",
-      "value": null
+      "value": 5000
     },
     "token": {
       "desc": "Authentication token for the broker.",
