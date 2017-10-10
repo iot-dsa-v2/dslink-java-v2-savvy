@@ -9,7 +9,7 @@ sourceCompatibility = 1.6
 targetCompatibility = 1.6
 
 build {
-    def inputFile = new File("dslink.json")
+    def inputFile = file('dslink.json')
     def json = new JsonSlurper().parseText(inputFile.text)
     version = json.version
 }
