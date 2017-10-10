@@ -13,7 +13,7 @@ import org.iot.dsa.node.action.DSAction;
  *
  * @author Aaron Hansen
  */
-public class ExampleRoot extends DSRootNode implements Runnable {
+public class RootNode extends DSRootNode implements Runnable {
 
     ///////////////////////////////////////////////////////////////////////////
     // Constants
@@ -41,7 +41,7 @@ public class ExampleRoot extends DSRootNode implements Runnable {
 
     // Nodes must support the public no-arg constructor.  Technically this isn't required here
     // since there are no other constructors...
-    public ExampleRoot() {
+    public RootNode() {
     }
 
     ///////////////////////////////////////////////////////////////////////////

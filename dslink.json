@@ -8,7 +8,7 @@
       "desc1": "*************** THIS IS REQUIRED AND MUST BE CHANGED ***************",
       "desc2": "Fully qualified class name of the root node of the link.",
       "type": "string",
-      "value": "org.iot.dsa.dslink.example.ExampleRoot"
+      "value": "org.iot.dsa.dslink.example.RootNode"
     },
     "broker": {
       "desc1": "*************** OPTIONAL CONFIGS IN ALPHABETICAL ORDER ***************",
