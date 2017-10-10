@@ -1,6 +1,6 @@
 # dslink-java-v2-example
 
-* Version: 1.0.0.0
+* Version: 1.0.0
 * Java - version 1.6 and up.
 * [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
@@ -86,6 +86,6 @@ at https://github.com/iot-dsa-v2/sdk-dslink-java-v2/blob/master/LICENSE
 
 ## History
 
-* Version 1.0.0.0
+* Version 1.0.0
   - Hello World
 
