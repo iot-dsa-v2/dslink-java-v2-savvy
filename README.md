@@ -54,24 +54,18 @@ This section outlines the hierarchy of nodes defined by this link.
   - _ExampleChild_ - There is no child, this is just a documentation example.
 
 
-## Node Guide
-
-The following section provides detailed descriptions of each node in the link as well as
-descriptions of actions, values and child nodes.
-
-
-### RootNode
+## RootNode
 
 This is the root node of the link.  It has a counter that is updated on a short interval,
 only when the node is subscribed.  It also has a simple action to reset the counter.
 
-**Actions**
+_Actions_
 - Reset - Resets the counter to 0.
 
-**Values**
+_Values_
 - Counter - Automatically updates whenever the node is subscribed.
 
-**Child Nodes**
+_Child Nodes_
 - There are no child nodes.
 
 

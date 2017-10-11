@@ -4,6 +4,7 @@ import org.iot.dsa.DSRuntime;
 import org.iot.dsa.dslink.DSRootNode;
 import org.iot.dsa.node.DSInfo;
 import org.iot.dsa.node.DSInt;
+import org.iot.dsa.node.DSString;
 import org.iot.dsa.node.action.ActionInvocation;
 import org.iot.dsa.node.action.ActionResult;
 import org.iot.dsa.node.action.DSAction;
@@ -20,6 +21,7 @@ public class RootNode extends DSRootNode implements Runnable {
     ///////////////////////////////////////////////////////////////////////////
 
     private static String COUNTER = "Counter";
+    private static String DOCS = "Docs";
     private static String RESET = "Reset";
 
     ///////////////////////////////////////////////////////////////////////////
@@ -59,6 +61,10 @@ public class RootNode extends DSRootNode implements Runnable {
                 .setTransient(true)
                 .setReadOnly(true);
         declareDefault(RESET, DSAction.DEFAULT);
+        // Change the following URL to your README
+        declareDefault(DOCS, DSString.valueOf("https://github.com/iot-dsa-v2/dslink-java-v2-example"))
+                .setTransient(true)
+                .setReadOnly(true);
     }
 
     /**
