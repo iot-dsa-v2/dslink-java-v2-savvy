@@ -1,7 +1,7 @@
 package org.iot.dsa.dslink.example;
 
 import org.iot.dsa.DSRuntime;
-import org.iot.dsa.dslink.DSRootNode;
+import org.iot.dsa.dslink.DSMainNode;
 import org.iot.dsa.node.DSInfo;
 import org.iot.dsa.node.DSInt;
 import org.iot.dsa.node.DSString;
@@ -14,7 +14,7 @@ import org.iot.dsa.node.action.DSAction;
  *
  * @author Aaron Hansen
  */
-public class RootNode extends DSRootNode implements Runnable {
+public class MainNode extends DSMainNode implements Runnable {
 
     ///////////////////////////////////////////////////////////////////////////
     // Constants
@@ -43,7 +43,7 @@ public class RootNode extends DSRootNode implements Runnable {
 
     // Nodes must support the public no-arg constructor.  Technically this isn't required here
     // since there are no other constructors...
-    public RootNode() {
+    public MainNode() {
     }
 
     ///////////////////////////////////////////////////////////////////////////

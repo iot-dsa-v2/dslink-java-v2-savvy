@@ -31,7 +31,7 @@ When creating a new link from this source material, you should do the following:
     - Change name, version, and description.
     - Change main, this is the path to the shell script used to launch the link.  It is created
       by the distZip task.
-    - Change the value of the config named "rootType". This must be the fully qualified class name 
+    - Change the value of the config named "mainType". This must be the fully qualified class name 
       of your root node.
 5. Edit this README
     - Please maintain a helpful readme.
@@ -50,11 +50,11 @@ When creating a new link from this source material, you should do the following:
 
 This section outlines the hierarchy of nodes defined by this link.
 
-- _RootNode_ - The root node of the link.
+- _MainNode_ - The root node of the link.
   - _ExampleChild_ - There is no child, this is just a documentation example.
 
 
-## RootNode
+## MainNode
 
 This is the root node of the link.  It has a counter that is updated on a short interval,
 only when the node is subscribed.  It also has a simple action to reset the counter.
