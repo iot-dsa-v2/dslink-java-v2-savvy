@@ -81,5 +81,5 @@ at https://github.com/iot-dsa-v2/sdk-dslink-java-v2/blob/master/LICENSE
 ## History
 
 * Version 1.0.0
-  - Hello World
+  - First Release
 
