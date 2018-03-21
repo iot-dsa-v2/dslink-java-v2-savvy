@@ -1,7 +1,7 @@
 {
   "name": "dslink-java-v2-example",
   "version": "1.0.0",
-  "dsa-version": "2.0",
+  "dsa-version": "2.0"
   "description": "Example Java Link",
   "main": "bin/dslink-java-v2-example",
   "configs": {
