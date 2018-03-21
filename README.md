@@ -7,7 +7,7 @@
 
 ## Overview
 
-This is a simple link that can copied and used as the boilerplate for a new Java DSLink.
+This is a simple link that can be copied and used as boilerplate for a new Java DSLink.
 
 If you are not familiar with DSA and links, an overview can be found at
 [here](http://iot-dsa.org/get-started/how-dsa-works).
@@ -29,10 +29,10 @@ When creating a new link from this source material, you should do the following:
     - At the very least, change the copyright holder.
 4. Modify dslink.json
     - Change name, version, and description.
-    - Change main, this is the path to the shell script used to launch the link.  It is created
-      by the distZip task.
-    - Change the value of the config named "mainType". This must be the fully qualified class name 
-      of your root node.
+    - Change main, this is the path to the shell script used to launch the link.  It is 
+      created by the distZip task.
+    - Change the value of the config named "handler_class". This must be the fully qualified 
+      class name of your main node.
 5. Edit this README
     - Please maintain a helpful readme.
     - Change the title.
@@ -40,9 +40,9 @@ When creating a new link from this source material, you should do the following:
     - Change the license if necessary.
     - Provide an overview of the link's purpose.  Keep the text linking to the DSA overview
       and core SDK for context.
-    - Remote this section (Creating a New Link).
-    - Update the Link Architecture.
-    - Update the Node Guide.
+    - Remove this section (Creating a New Link).
+    - Update the Link Architecture to match your node hierarchy.
+    - Update the Node Guide accordingly.
     - Acknowledge any 3rd party libraries you use.
     - Maintain a version history.
 
