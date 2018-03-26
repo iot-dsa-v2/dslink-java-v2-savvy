@@ -29,6 +29,7 @@ When creating a new link from this source material, you should do the following:
     - At the very least, change the copyright holder.
 4. Modify dslink.json
     - Change name, version, and description.
+    - For DSA v1, set dsa-version to "1.0".  Use "2.0" for DSA v2.
     - Change main, this is the path to the shell script used to launch the link.  It is 
       created by the distZip task.
     - Change the value of the config named "handler_class". This must be the fully qualified 
