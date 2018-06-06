@@ -10,22 +10,22 @@ import org.iot.dsa.node.action.ActionResult;
 import org.iot.dsa.node.action.DSAction;
 
 /**
- * The root and only node of this link.
+ * The main and only node of this link.
  *
  * @author Aaron Hansen
  */
 public class MainNode extends DSMainNode implements Runnable {
 
     ///////////////////////////////////////////////////////////////////////////
-    // Constants
+    // Class Fields
     ///////////////////////////////////////////////////////////////////////////
 
     private static String COUNTER = "Counter";
-    private static String DOCS = "Docs";
     private static String RESET = "Reset";
+    private static String WRITABLE = "Writable";
 
     ///////////////////////////////////////////////////////////////////////////
-    // Fields
+    // Instance Fields
     ///////////////////////////////////////////////////////////////////////////
 
     // Nodes store children and meta-data about the relationship in DSInfo instances.
@@ -34,38 +34,20 @@ public class MainNode extends DSMainNode implements Runnable {
     // care will be required.
     private final DSInfo counter = getInfo(COUNTER);
     private final DSInfo reset = getInfo(RESET);
-
     private DSRuntime.Timer timer;
 
     ///////////////////////////////////////////////////////////////////////////
     // Constructors
     ///////////////////////////////////////////////////////////////////////////
 
-    // Nodes must support the public no-arg constructor.  Technically this isn't required here
+    // Nodes must support the public no-arg constructor.  Technically this isn't required
     // since there are no other constructors...
     public MainNode() {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    // Methods
+    // Public Methods
     ///////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Defines the permanent children of this node type, their existence is guaranteed in all
-     * instances.  This is only ever called once per, type per process.
-     */
-    @Override
-    protected void declareDefaults() {
-        super.declareDefaults();
-        declareDefault(COUNTER, DSInt.valueOf(0))
-                .setTransient(true)
-                .setReadOnly(true);
-        declareDefault(RESET, DSAction.DEFAULT);
-        // Change the following URL to your README
-        declareDefault(DOCS, DSString.valueOf("https://github.com/iot-dsa-v2/dslink-java-v2-example"))
-                .setTransient(true)
-                .setReadOnly(true);
-    }
 
     /**
      * Handles the reset action.
@@ -85,35 +67,6 @@ public class MainNode extends DSMainNode implements Runnable {
     }
 
     /**
-     * Starts the timer.
-     */
-    @Override
-    protected void onSubscribed() {
-        // Use DSRuntime for timers and its thread pool.
-        timer = DSRuntime.run(this, System.currentTimeMillis() + 1000l, 1000l);
-    }
-
-    /**
-     * Cancels an active timer if there is one.
-     */
-    @Override
-    protected void onStopped() {
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
-        }
-    }
-
-    /**
-     * Cancels the timer.
-     */
-    @Override
-    protected void onUnsubscribed() {
-        timer.cancel();
-        timer = null;
-    }
-
-    /**
      * Called by the timer, increments the counter.
      */
     @Override
@@ -129,11 +82,55 @@ public class MainNode extends DSMainNode implements Runnable {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    // Inner Classes
+    // Protected Methods
     ///////////////////////////////////////////////////////////////////////////
 
-    ///////////////////////////////////////////////////////////////////////////
-    // Initialization
-    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Defines the permanent children of this node type, their existence is guaranteed in all
+     * instances.  This is only ever called once per, type per process.
+     */
+    @Override
+    protected void declareDefaults() {
+        super.declareDefaults();
+        declareDefault(COUNTER, DSInt.valueOf(0))
+                .setTransient(true)
+                .setReadOnly(true);
+        declareDefault(WRITABLE, DSInt.valueOf(0));
+        declareDefault(RESET, DSAction.DEFAULT);
+        // Change the following URL to your README
+        declareDefault("Docs",
+                       DSString.valueOf("https://github.com/iot-dsa-v2/dslink-java-v2-example"))
+                .setTransient(true)
+                .setReadOnly(true);
+    }
+
+    /**
+     * Cancels an active timer if there is one.
+     */
+    @Override
+    protected void onStopped() {
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+    }
+
+    /**
+     * Starts the timer.
+     */
+    @Override
+    protected void onSubscribed() {
+        // Use DSRuntime for timers and its thread pool.
+        timer = DSRuntime.run(this, System.currentTimeMillis() + 1000, 1000);
+    }
+
+    /**
+     * Cancels the timer.
+     */
+    @Override
+    protected void onUnsubscribed() {
+        timer.cancel();
+        timer = null;
+    }
 
 }
