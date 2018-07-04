@@ -4,7 +4,7 @@ apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'maven'
 
-group 'org.iot.dsa'
+group 'org.iot-dsa'
 mainClassName = 'org.iot.dsa.dslink.DSLink'
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -19,13 +19,13 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven {
-        url 'https://oss.sonatype.org/content/repositories/snapshots/'
+        url 'https://iot-dsa-v2.github.io/sdk-dslink-java-v2/repository/'
     }
 }
 
 dependencies {
-    compile 'org.iot.dsa:dslink-core:+'
-    compile 'org.iot.dsa:dslink-websocket-standalone:+'
+    compile 'org.iot-dsa:dslink-v2:+'
+    compile 'org.iot-dsa:dslink-v2-websocket:+'
     testCompile 'junit:junit:+'
 }
 
