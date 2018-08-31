@@ -2,7 +2,6 @@ import groovy.json.JsonSlurper
 
 apply plugin: 'java'
 apply plugin: 'application'
-apply plugin: 'maven'
 
 group 'org.iot-dsa'
 mainClassName = 'org.iot.dsa.dslink.DSLink'
@@ -23,6 +22,7 @@ repositories {
 }
 
 dependencies {
+    //implementation 'org.iot-dsa:dslink-v2-websocket:+' //for locally installed sdk
     implementation 'com.github.iot-dsa-v2:sdk-dslink-java-v2:+'
 }
 
@@ -33,3 +33,6 @@ run {
     workingDir project.buildDir
 }
 
+wrapper {
+    gradleVersion = '4.10'
+}
