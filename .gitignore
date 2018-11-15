@@ -24,6 +24,7 @@
 # Runtime files
 **/.key
 **/db
+**/dslink.jks
 **/nodes.json
 **/nodes*.zip
 **/*.log.*.zip

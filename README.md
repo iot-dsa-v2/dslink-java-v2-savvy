@@ -1,6 +1,5 @@
 # dslink-java-v2-example
 
-* Version: 1.0.0
 * Java - version 1.6 and up.
 * [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
@@ -32,7 +31,7 @@ When creating a new link from this source material, you should do the following:
     - For DSA v1, set dsa-version to "1.0".  Use "2.0" for DSA v2.
     - Change main, this is the path to the shell script used to launch the link.  It is 
       created by the distZip task.
-    - Change the value of the config named "handler_class". This must be the fully qualified 
+    - Change the value of the config named "main-node". This must be the fully qualified
       class name of your main node.
 5. Edit this README
     - Please maintain a helpful readme.
@@ -78,9 +77,4 @@ This software contains unmodified binary redistributions of
 [sdk-dslink-java-v2](https://github.com/iot-dsa-v2/sdk-dslink-java-v2), which is licensed 
 and available under the Apache License 2.0. An original copy of the license agreement can be found 
 at https://github.com/iot-dsa-v2/sdk-dslink-java-v2/blob/master/LICENSE
-
-## History
-
-* Version 1.0.0
-  - First Release
 
