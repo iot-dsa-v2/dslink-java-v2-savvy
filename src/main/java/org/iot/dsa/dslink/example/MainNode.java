@@ -53,8 +53,9 @@ public class MainNode extends DSMainNode implements Runnable {
      * Handles the reset action.
      */
     @Override
-    public ActionResult onInvoke(DSInfo actionInfo, ActionInvocation invocation) {
-        if (actionInfo == reset) {
+    public ActionResult invoke(DSInfo action, DSInfo target, ActionInvocation invocation) {
+        if (action == reset) {
+            //target will == getInfo()
             synchronized (counter) {
                 put(counter, DSInt.valueOf(0));
                 // The following line would have also worked, but it would have
@@ -63,7 +64,7 @@ public class MainNode extends DSMainNode implements Runnable {
             }
             return null;
         }
-        return super.onInvoke(actionInfo, invocation);
+        return super.invoke(action, target, invocation);
     }
 
     /**
@@ -98,7 +99,7 @@ public class MainNode extends DSMainNode implements Runnable {
         declareDefault(WRITABLE, DSInt.valueOf(0));
         declareDefault(RESET, DSAction.DEFAULT);
         // Change the following URL to your README
-        declareDefault("Docs",
+        declareDefault("Help",
                        DSString.valueOf("https://github.com/iot-dsa-v2/dslink-java-v2-example"))
                 .setTransient(true)
                 .setReadOnly(true);
