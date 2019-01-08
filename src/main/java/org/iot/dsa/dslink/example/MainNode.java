@@ -55,7 +55,6 @@ public class MainNode extends DSMainNode implements Runnable {
     @Override
     public ActionResult invoke(DSInfo action, DSInfo target, ActionInvocation invocation) {
         if (action == reset) {
-            //target will == getInfo()
             synchronized (counter) {
                 put(counter, DSInt.valueOf(0));
                 // The following line would have also worked, but it would have
@@ -94,6 +93,7 @@ public class MainNode extends DSMainNode implements Runnable {
     protected void declareDefaults() {
         super.declareDefaults();
         declareDefault(COUNTER, DSInt.valueOf(0))
+                .setAdmin(true)
                 .setTransient(true)
                 .setReadOnly(true);
         declareDefault(WRITABLE, DSInt.valueOf(0));
