@@ -1,6 +1,6 @@
 # dslink-java-v2-example
 
-* Java - version 1.6 and up.
+* Java - version 1.8 and up.
 * [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
 
