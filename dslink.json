@@ -17,7 +17,7 @@
     "msgpack": {
       "help": "Whether or not to use msgpack.  False is helpful for debugging.",
       "type": "bool",
-      "value": true
+      "value": false
     },
     "broker": {
       "type": "url",
