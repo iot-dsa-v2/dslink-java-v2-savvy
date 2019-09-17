@@ -1,13 +1,17 @@
 package org.iot.dsa.dslink.example;
 
 import org.iot.dsa.DSRuntime;
+import org.iot.dsa.dslink.ActionResults;
 import org.iot.dsa.dslink.DSMainNode;
 import org.iot.dsa.node.DSInfo;
 import org.iot.dsa.node.DSInt;
+import org.iot.dsa.node.DSNode;
 import org.iot.dsa.node.DSString;
-import org.iot.dsa.node.action.ActionInvocation;
-import org.iot.dsa.node.action.ActionResult;
 import org.iot.dsa.node.action.DSAction;
+import org.iot.dsa.node.action.DSIActionRequest;
+import org.iot.dsa.time.DSDateTime;
+import org.iot.dsa.time.DSDuration;
+import org.iot.dsa.time.DSTime;
 
 /**
  * The main and only node of this link.
@@ -32,8 +36,8 @@ public class MainNode extends DSMainNode implements Runnable {
     // Storing infos as Java fields eliminates subsequent name lookups, but should only be
     // done with declared defaults.  It can be done with dynamic children, but extra
     // care will be required.
-    private final DSInfo counter = getInfo(COUNTER);
-    private final DSInfo reset = getInfo(RESET);
+    private final DSInfo<DSInt> counter = getInfo(COUNTER);
+    private final DSInfo<?> reset = getInfo(RESET);
     private DSRuntime.Timer timer;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -53,8 +57,8 @@ public class MainNode extends DSMainNode implements Runnable {
      * Handles the reset action.
      */
     @Override
-    public ActionResult invoke(DSInfo action, DSInfo target, ActionInvocation invocation) {
-        if (action == reset) {
+    public ActionResults invoke(DSIActionRequest req) {
+        if (req.getActionInfo() == reset) {
             synchronized (counter) {
                 put(counter, DSInt.valueOf(0));
                 // The following line would have also worked, but it would have
@@ -63,7 +67,7 @@ public class MainNode extends DSMainNode implements Runnable {
             }
             return null;
         }
-        return super.invoke(action, target, invocation);
+        return super.invoke(req);
     }
 
     /**
@@ -72,8 +76,7 @@ public class MainNode extends DSMainNode implements Runnable {
     @Override
     public void run() {
         synchronized (counter) {
-            DSInt value = (DSInt) counter.getValue();
-            put(counter, DSInt.valueOf(value.toInt() + 1));
+            put(counter, DSInt.valueOf(counter.get().toInt() + 1));
             // Without the counter field, this method would have required at least one lookup.
             // The following is the worst performance option (not that it really matters here):
             // DSInt val = (DSInt) get(COUNTER);
@@ -98,11 +101,30 @@ public class MainNode extends DSMainNode implements Runnable {
                 .setReadOnly(true);
         declareDefault(WRITABLE, DSInt.valueOf(0));
         declareDefault(RESET, DSAction.DEFAULT);
+        declareDefault("dateTime", DSDateTime.now());
+        declareDefault("duration", DSDuration.NULL);
+        declareDefault("time", DSTime.NULL);
         // Change the following URL to your README
         declareDefault("Help",
                        DSString.valueOf("https://github.com/iot-dsa-v2/dslink-java-v2-example"))
                 .setTransient(true)
                 .setReadOnly(true);
+        DSNode node = declareDefault("Another Node", new DSNode()).getNode();
+        node.put("abc", DSInt.valueOf(10));
+        node.put("def", DSString.valueOf("def"));
+        node.put("node:", makeNode());
+        declareDefault("Values Action", new DSAction() {
+            @Override
+            public ActionResults invoke(DSIActionRequest request) {
+                return makeResults(request, DSInt.valueOf(0), DSInt.valueOf(1));
+            }
+
+            {
+                addColumnMetadata("first", DSInt.NULL);
+                addColumnMetadata("second", DSInt.NULL);
+                setResultsType(ResultsType.VALUES);
+            }
+        });
     }
 
     /**
@@ -132,6 +154,28 @@ public class MainNode extends DSMainNode implements Runnable {
     protected void onUnsubscribed() {
         timer.cancel();
         timer = null;
+    }
+
+    private DSNode makeNode() {
+        DSNode ret = new DSNode();
+        ret.put("abc", DSString.valueOf("abc"));
+        ret.put("anotherNode", new DSNode());
+        return ret;
+    }
+
+    public static class MyAction extends DSAction {
+
+        @Override
+        public ActionResults invoke(DSIActionRequest request) {
+            return makeResults(request, DSInt.valueOf(0), DSInt.valueOf(1));
+        }
+
+        {
+            addColumnMetadata("first", DSInt.NULL);
+            addColumnMetadata("second", DSInt.NULL);
+            setResultsType(ResultsType.VALUES);
+        }
+
     }
 
 }
