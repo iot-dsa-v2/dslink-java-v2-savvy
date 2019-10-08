@@ -99,8 +99,8 @@ public class MainNode extends DSMainNode implements Runnable {
     @Override
     protected void declareDefaults() {
         super.declareDefaults();
-        Logger l = Logger.getLogger("dsa");
-        l.setLevel(DSLogger.all);
+        //Logger l = Logger.getLogger("transport");
+        //l.setLevel(DSLogger.all);
         // Change the following URL to your README
         declareDefault("Help",
                        DSString.valueOf("https://github.com/iot-dsa-v2/dslink-java-v2-example"))
