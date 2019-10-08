@@ -1,13 +1,22 @@
 package org.iot.dsa.dslink.example;
 
+import java.util.logging.Logger;
 import org.iot.dsa.DSRuntime;
+import org.iot.dsa.dslink.Action.ResultsType;
+import org.iot.dsa.dslink.ActionResults;
 import org.iot.dsa.dslink.DSMainNode;
+import org.iot.dsa.logging.DSLogger;
+import org.iot.dsa.node.DSIValue;
 import org.iot.dsa.node.DSInfo;
 import org.iot.dsa.node.DSInt;
+import org.iot.dsa.node.DSMap;
+import org.iot.dsa.node.DSMetadata;
+import org.iot.dsa.node.DSNode;
 import org.iot.dsa.node.DSString;
-import org.iot.dsa.node.action.ActionInvocation;
-import org.iot.dsa.node.action.ActionResult;
 import org.iot.dsa.node.action.DSAction;
+import org.iot.dsa.node.action.DSIActionRequest;
+import org.iot.dsa.table.DSIResultsCursor;
+import org.iot.dsa.time.DSDateTime;
 
 /**
  * The main and only node of this link.
@@ -22,7 +31,6 @@ public class MainNode extends DSMainNode implements Runnable {
 
     private static String COUNTER = "Counter";
     private static String RESET = "Reset";
-    private static String WRITABLE = "Writable";
 
     ///////////////////////////////////////////////////////////////////////////
     // Instance Fields
@@ -32,8 +40,8 @@ public class MainNode extends DSMainNode implements Runnable {
     // Storing infos as Java fields eliminates subsequent name lookups, but should only be
     // done with declared defaults.  It can be done with dynamic children, but extra
     // care will be required.
-    private final DSInfo counter = getInfo(COUNTER);
-    private final DSInfo reset = getInfo(RESET);
+    private final DSInfo<DSInt> counter = getInfo(COUNTER);
+    private final DSInfo<DSAction> reset = getInfo(RESET);
     private DSRuntime.Timer timer;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -53,8 +61,8 @@ public class MainNode extends DSMainNode implements Runnable {
      * Handles the reset action.
      */
     @Override
-    public ActionResult invoke(DSInfo action, DSInfo target, ActionInvocation invocation) {
-        if (action == reset) {
+    public ActionResults invoke(DSIActionRequest req) {
+        if (req.getActionInfo() == reset) {
             synchronized (counter) {
                 put(counter, DSInt.valueOf(0));
                 // The following line would have also worked, but it would have
@@ -63,7 +71,7 @@ public class MainNode extends DSMainNode implements Runnable {
             }
             return null;
         }
-        return super.invoke(action, target, invocation);
+        return super.invoke(req);
     }
 
     /**
@@ -72,8 +80,7 @@ public class MainNode extends DSMainNode implements Runnable {
     @Override
     public void run() {
         synchronized (counter) {
-            DSInt value = (DSInt) counter.getValue();
-            put(counter, DSInt.valueOf(value.toInt() + 1));
+            put(counter, DSInt.valueOf(counter.get().toInt() + 1));
             // Without the counter field, this method would have required at least one lookup.
             // The following is the worst performance option (not that it really matters here):
             // DSInt val = (DSInt) get(COUNTER);
@@ -92,17 +99,77 @@ public class MainNode extends DSMainNode implements Runnable {
     @Override
     protected void declareDefaults() {
         super.declareDefaults();
-        declareDefault(COUNTER, DSInt.valueOf(0))
-                .setAdmin(true)
-                .setTransient(true)
-                .setReadOnly(true);
-        declareDefault(WRITABLE, DSInt.valueOf(0));
-        declareDefault(RESET, DSAction.DEFAULT);
+        Logger l = Logger.getLogger("dsa");
+        l.setLevel(DSLogger.all);
         // Change the following URL to your README
         declareDefault("Help",
                        DSString.valueOf("https://github.com/iot-dsa-v2/dslink-java-v2-example"))
                 .setTransient(true)
                 .setReadOnly(true);
+        declareDefault(COUNTER, DSInt.valueOf(0))
+                .setAdmin(true)
+                .setTransient(true)
+                .setReadOnly(true);
+        declareDefault("Writable", DSInt.valueOf(0));
+        declareDefault("Date Time", DSDateTime.now()).setTransient(true);
+        declareDefault(RESET, DSAction.DEFAULT);
+        declareDefault("Values Action", new DSAction() {
+            @Override
+            public ActionResults invoke(DSIActionRequest request) {
+                return makeResults(request, DSInt.valueOf(0), DSInt.valueOf(1));
+            }
+
+            {
+                addColumnMetadata("first", DSInt.NULL);
+                addColumnMetadata("second", DSInt.NULL);
+                setResultsType(ResultsType.VALUES);
+            }
+        });
+        declareDefault("Stream Action", new DSAction() {
+            @Override
+            public ActionResults invoke(DSIActionRequest request) {
+                return makeResults(request, new DSIResultsCursor() {
+
+                    private DSDateTime next;
+                    private int count;
+                    private DSRuntime.Timer update = DSRuntime.run(()->update(),
+                                                                   System.currentTimeMillis()+1000,
+                                                                   1000);
+
+                    @Override
+                    public boolean next() {
+                        return next != null;
+                    }
+
+                    @Override
+                    public int getColumnCount() {
+                        return 1;
+                    }
+
+                    @Override
+                    public void getColumnMetadata(int index, DSMap bucket) {
+                        new DSMetadata(bucket).setName("timestamp").setType(DSDateTime.NULL);
+                    }
+
+                    @Override
+                    public DSIValue getValue(int index) {
+                        DSDateTime ret = next;
+                        next = null;
+                        return ret;
+                    }
+
+                    private void update() {
+                        if (!request.isOpen() || (++count > 10)) {
+                            update.cancel();
+                            request.close();
+                        } else{
+                            next = DSDateTime.now();
+                            request.sendResults();
+                        }
+                    }
+                });
+            }
+        }.setResultsType(ResultsType.STREAM));
     }
 
     /**

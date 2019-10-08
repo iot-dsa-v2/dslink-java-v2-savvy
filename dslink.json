@@ -1,6 +1,6 @@
 {
   "name": "dslink-java-v2-example",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Example Java Link",
   "main": "bin/dslink-java-v2-example",
   "configs": {
@@ -17,7 +17,7 @@
     "msgpack": {
       "help": "Whether or not to use msgpack.  False is helpful for debugging.",
       "type": "bool",
-      "value": true
+      "value": false
     },
     "broker": {
       "type": "url",
