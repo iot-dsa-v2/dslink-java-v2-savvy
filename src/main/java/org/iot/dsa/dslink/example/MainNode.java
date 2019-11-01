@@ -1,19 +1,17 @@
 package org.iot.dsa.dslink.example;
 
-import java.util.logging.Logger;
 import org.iot.dsa.DSRuntime;
 import org.iot.dsa.dslink.Action.ResultsType;
 import org.iot.dsa.dslink.ActionResults;
 import org.iot.dsa.dslink.DSMainNode;
-import org.iot.dsa.logging.DSLogger;
 import org.iot.dsa.node.DSIValue;
 import org.iot.dsa.node.DSInfo;
 import org.iot.dsa.node.DSInt;
 import org.iot.dsa.node.DSMap;
 import org.iot.dsa.node.DSMetadata;
-import org.iot.dsa.node.DSNode;
 import org.iot.dsa.node.DSString;
 import org.iot.dsa.node.action.DSAction;
+import org.iot.dsa.node.action.DSIAction;
 import org.iot.dsa.node.action.DSIActionRequest;
 import org.iot.dsa.table.DSIResultsCursor;
 import org.iot.dsa.time.DSDateTime;
@@ -41,7 +39,7 @@ public class MainNode extends DSMainNode implements Runnable {
     // done with declared defaults.  It can be done with dynamic children, but extra
     // care will be required.
     private final DSInfo<DSInt> counter = getInfo(COUNTER);
-    private final DSInfo<DSAction> reset = getInfo(RESET);
+    private final DSInfo<DSIAction> reset = getInfo(RESET);
     private DSRuntime.Timer timer;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -130,16 +128,12 @@ public class MainNode extends DSMainNode implements Runnable {
             public ActionResults invoke(DSIActionRequest request) {
                 return makeResults(request, new DSIResultsCursor() {
 
-                    private DSDateTime next;
                     private int count;
-                    private DSRuntime.Timer update = DSRuntime.run(()->update(),
-                                                                   System.currentTimeMillis()+1000,
+                    private DSDateTime next;
+                    private DSRuntime.Timer update = DSRuntime.run(() -> update(),
+                                                                   System.currentTimeMillis()
+                                                                           + 1000,
                                                                    1000);
-
-                    @Override
-                    public boolean next() {
-                        return next != null;
-                    }
 
                     @Override
                     public int getColumnCount() {
@@ -158,11 +152,16 @@ public class MainNode extends DSMainNode implements Runnable {
                         return ret;
                     }
 
+                    @Override
+                    public boolean next() {
+                        return next != null;
+                    }
+
                     private void update() {
                         if (!request.isOpen() || (++count > 10)) {
                             update.cancel();
                             request.close();
-                        } else{
+                        } else {
                             next = DSDateTime.now();
                             request.sendResults();
                         }
